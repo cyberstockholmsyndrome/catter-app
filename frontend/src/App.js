@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Form from './Form';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,7 @@ class App extends Component {
     };
   }
 
-  async componentDidMount() {
+  async reloader() {
     try {
       const res = await fetch('http://127.0.0.1:8000/api/cat');
       const cats = await res.json();
@@ -18,6 +20,15 @@ class App extends Component {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  // przy wejściu na stronę
+  componentDidMount() {
+    this.reloader();
+  }
+  // przy kliknięciu submita
+  componentDidUpdate() {
+    this.reloader();
   }
 
   render() {
@@ -36,6 +47,8 @@ class App extends Component {
     return (
       <div>
         {Kats}
+        <br/>
+      <Form/>
       </div>
     );
   }
