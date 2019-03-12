@@ -25,6 +25,7 @@ class Form extends Component {
             headers: new Headers({ "Content-Type": "application/json" })
         };
         fetch(endpoint, config);
+        this.props.reloader();
       }
     
       render() {

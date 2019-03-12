@@ -8,6 +8,8 @@ class App extends Component {
     this.state = { 
       cats: []
     };
+
+    this.reloader = this.reloader.bind(this);
   }
 
   async reloader() {
@@ -22,33 +24,28 @@ class App extends Component {
     }
   }
 
-  // przy wejściu na stronę
   componentDidMount() {
-    this.reloader();
-  }
-  // przy kliknięciu submita
-  componentDidUpdate() {
     this.reloader();
   }
 
   render() {
     const Kats = this.state.cats.map(cat => (
-      <body>
+      
         <div key={cat.id}>
           <h1>Imię: {cat.name}</h1>
           <h2>Wiek: {cat.age}</h2>
           <h2>Rasa: {cat.race}</h2>
           <hr></hr>
           <span><b>Opis:</b> {cat.description}</span>
+          <hr></hr>
         </div>
-      </body>
     ))
     
     return (
       <div>
         {Kats}
         <br/>
-      <Form/>
+      <Form reloader={this.reloader}/>
       </div>
     );
   }
