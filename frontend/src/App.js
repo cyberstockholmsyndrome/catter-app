@@ -33,22 +33,26 @@ class App extends Component {
     }));
   }
 
-  handleAdd = event => {
-    event.preventDefault();
-    const { name, age, race, description } = this.state.formText;
-    const lead = { name, age, race, description };
-    const endpoint = "http://localhost:8000/api/cat/";
-    const config = {
-      method: "post",
-      body: JSON.stringify(lead),
-      headers: new Headers({ "Content-Type": "application/json" })
-    };
-    fetch(endpoint, config);
-    fetch("http://127.0.0.1:8000/api/cat")
-      .then(res => res.json())
-      .then(cats => this.setState({ cats }));
-    console.log("Dodano");
-  };
+  async handleAdd(event) {
+    try {
+      event.preventDefault();
+      const { name, age, race, description } = this.state.formText;
+      const lead = { name, age, race, description };
+      const endpoint = "http://localhost:8000/api/cat/";
+      const config = {
+        method: "post",
+        body: JSON.stringify(lead),
+        headers: new Headers({ "Content-Type": "application/json" })
+      };
+      await fetch(endpoint, config);
+      fetch("http://127.0.0.1:8000/api/cat")
+        .then(res => res.json())
+        .then(newCats => this.setState({ cats: newCats }));
+      console.log("Dodano");
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   handleDelete = catId => {
     try {

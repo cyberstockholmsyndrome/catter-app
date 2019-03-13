@@ -5,25 +5,23 @@ class Form extends Component {
     return (
       <form className="ml-4 mr-4">
         <div className="form-group">
-          <label for="imie">Imię:</label>
+          <label>Imię:</label>
           <input
             type="text"
             className="form-control mb-2"
             value={this.props.formText.name}
             name="name"
             onChange={this.props.onChange}
-            id="imie"
           />
         </div>
         <div className="form-group">
-          <label for="wiek">Wiek:</label>
+          <label>Wiek:</label>
           <input
             type="text"
             className="form-control mb-2"
             value={this.props.formText.age}
             name="age"
             onChange={this.props.onChange}
-            id="wiek"
           />
         </div>
         <div className="form-group">
@@ -34,7 +32,6 @@ class Form extends Component {
             value={this.props.formText.race}
             name="race"
             onChange={this.props.onChange}
-            id="rasa"
           />
         </div>
         <div className="form-group">
@@ -45,7 +42,6 @@ class Form extends Component {
             value={this.props.formText.description}
             name="description"
             onChange={this.props.onChange}
-            id="opis"
           />
         </div>
 
