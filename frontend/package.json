@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "formik": "^1.5.1",
+    "prettier": "^1.16.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-form": "^3.5.7",

@@ -6,6 +6,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Cat
         fields = (
+            'id',
             'name',
             'age',
             'race',
