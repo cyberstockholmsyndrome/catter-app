@@ -68,15 +68,15 @@ class App extends Component {
 
   render() {
     const Kats = this.state.cats.map(cat => (
-      <div key={cat.id}>
+      <div className="ml-4" key={cat.id}>
         <h1>Imię: {cat.name}</h1>
         <h2>Wiek: {cat.age}</h2>
         <h2>Rasa: {cat.race}</h2>
-        <hr />
+        <br />
         <span>
           <b>Opis:</b> {cat.description}
         </span>
-        <hr />
+        <hr className="mr-4" />
         <DeleteButton id={cat.id} onDelete={this.handleDelete} />
       </div>
     ));
@@ -84,11 +84,13 @@ class App extends Component {
     return (
       <div>
         <Header />
+        <br />
         <Form
           onAdd={this.handleAdd}
           onChange={this.handleChange}
           formText={this.state.formText}
         />
+        <br />
         {Kats}
         <br />
       </div>

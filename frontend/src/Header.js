@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class Header extends Component {
   render() {
     return (
-      <header>
-          <h1>Catter App</h1>
-      </header>
-    )
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="/" className="navbar-brand">
+          Catter App
+        </a>
+      </nav>
+    );
   }
 }
 
