@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Form extends Component {
   render() {
     return (
-      <form className="ml-4 mr-4">
+      <form>
         <div className="form-group">
           <label>Imię:</label>
           <input

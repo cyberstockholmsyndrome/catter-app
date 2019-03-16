@@ -17,7 +17,7 @@ class CatList extends Component {
 
   componentDidMount() {
     try {
-      fetch("http://127.0.0.1:8000/api/cat")
+      fetch("http://localhost:8000/api/cat/")
         .then(res => res.json())
         .then(cats => this.setState({ cats }));
     } catch (e) {
@@ -44,7 +44,7 @@ class CatList extends Component {
         headers: new Headers({ "Content-Type": "application/json" })
       };
       await fetch(endpoint, config);
-      fetch("http://127.0.0.1:8000/api/cat")
+      fetch("http://localhost:8000/api/cat/")
         .then(res => res.json())
         .then(newCats => this.setState({ cats: newCats }));
       console.log("Dodano");
@@ -71,7 +71,7 @@ class CatList extends Component {
 
   render() {
     const Kats = this.state.cats.map(cat => (
-      <div className="ml-4" key={cat.id}>
+      <div key={cat.id}>
         <h1>Imię: {cat.name}</h1>
         <h2>Wiek: {cat.age}</h2>
         <h2>Rasa: {cat.race}</h2>
@@ -79,21 +79,25 @@ class CatList extends Component {
         <span>
           <b>Opis:</b> {cat.description}
         </span>
-        <hr className="mr-4" />
+        <hr />
         <DeleteButton id={cat.id} onDelete={this.handleDelete} />
       </div>
     ));
 
     return (
-      <div>
-        <Form
-          onAdd={this.handleAdd}
-          onChange={this.handleChange}
-          formText={this.state.formText}
-        />
-        <br />
-        {Kats}
-        <br />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-3">
+            <Form
+              onAdd={this.handleAdd}
+              onChange={this.handleChange}
+              formText={this.state.formText}
+            />
+            <br />
+            {Kats}
+            <br />
+          </div>
+        </div>
       </div>
     );
   }
