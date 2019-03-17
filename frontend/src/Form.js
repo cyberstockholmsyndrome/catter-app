@@ -44,12 +44,23 @@ class Form extends Component {
             onChange={this.props.onChange}
           />
         </div>
-
+        <div className="form-group">
+          <label>Zdjęcie:</label>
+          <input
+            type="file"
+            onChange={this.props.fileChangedHandler}
+            className="form-control-file"
+            accept="image/*"
+            value={this.props.imageUrl}
+            name="imageUrl"
+          />
+        </div>
         <div className="">
           <button
             type="Submit"
             onClick={this.props.onAdd}
             className="btn btn-primary mb-2 dodaj"
+            value={this.props.formText.imageUrl}
           >
             Dodaj
           </button>

@@ -8,14 +8,15 @@ class CatList extends Component {
     super(props);
     this.state = {
       cats: [],
-      formText: { name: "", age: "", race: "", description: "" }
+      formText: { name: "", age: "", race: "", description: "", imageUrl: null }
     };
 
+    this.refresher = this.refresher.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
   }
 
-  componentDidMount() {
+  refresher() {
     try {
       fetch("http://localhost:8000/api/cat/")
         .then(res => res.json())
@@ -25,32 +26,47 @@ class CatList extends Component {
     }
   }
 
+  componentDidMount() {
+    this.refresher();
+  }
+
+  fileChangedHandler = event => {
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  uploadHandler = () => {
+    console.log(this.state.selectedFile);
+  };
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState(prevState => ({
-      formText: { ...prevState.formText, [name]: value }
+      formText: {
+        ...prevState.formText,
+        [name]: value
+      }
     }));
   }
 
   async handleAdd(event) {
-    try {
-      event.preventDefault();
-      const { name, age, race, description } = this.state.formText;
-      const lead = { name, age, race, description };
-      const endpoint = "http://localhost:8000/api/cat/";
-      const config = {
-        method: "post",
-        body: JSON.stringify(lead),
-        headers: new Headers({ "Content-Type": "application/json" })
-      };
-      await fetch(endpoint, config);
-      fetch("http://localhost:8000/api/cat/")
-        .then(res => res.json())
-        .then(newCats => this.setState({ cats: newCats }));
-      console.log("Dodano");
-    } catch (e) {
-      console.log(e);
-    }
+    event.preventDefault();
+
+    const endpoint = "http://localhost:8000/api/cat/";
+    const photo = this.state.selectedFile;
+
+    const formData = new FormData();
+    formData.append("name", this.state.formText.name);
+    formData.append("age", this.state.formText.age);
+    formData.append("race", this.state.formText.race);
+    formData.append("description", this.state.formText.description);
+    formData.append("imageUrl", photo);
+
+    const config = {
+      method: "post",
+      body: formData
+    };
+    await fetch(endpoint, config);
+    await this.refresher();
   }
 
   handleDelete = catId => {
@@ -76,6 +92,7 @@ class CatList extends Component {
         <h2>Wiek: {cat.age}</h2>
         <h2>Rasa: {cat.race}</h2>
         <br />
+        <img src={cat.imageUrl} className="img-fluid" alt="Cat" />
         <span>
           <b>Opis:</b> {cat.description}
         </span>
@@ -87,11 +104,12 @@ class CatList extends Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-sm-8 col-md-6 col-lg-4 col-xl-3">
             <Form
               onAdd={this.handleAdd}
               onChange={this.handleChange}
               formText={this.state.formText}
+              fileChangedHandler={this.fileChangedHandler}
             />
             <br />
             {Kats}

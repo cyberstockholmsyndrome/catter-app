@@ -10,5 +10,6 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'age',
             'race',
-            'description'
+            'description',
+            'imageUrl'
         )
