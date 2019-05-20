@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import Form from "./Form";
 import DeleteButton from "./DeleteButton";
@@ -17,13 +18,10 @@ class CatList extends Component {
   }
 
   refresher() {
-    try {
-      fetch("http://localhost:8000/api/cat/")
-        .then(res => res.json())
-        .then(cats => this.setState({ cats }));
-    } catch (e) {
-      console.log(e);
-    }
+    axios
+      .get("http://localhost:8000/api/cat/")
+      .then(res => res.data)
+      .then(cats => this.setState({ cats }));
   }
 
   componentDidMount() {
@@ -61,28 +59,19 @@ class CatList extends Component {
     formData.append("description", this.state.formText.description);
     formData.append("imageUrl", photo);
 
-    const config = {
-      method: "post",
-      body: formData
-    };
-    await fetch(endpoint, config);
+    await axios.post(endpoint, formData);
     await this.refresher();
   }
 
   handleDelete = catId => {
-    try {
-      const endpoint = "http://localhost:8000/api/cat/" + catId;
-      const config = {
-        method: "delete",
-        body: "",
-        headers: new Headers({ "Content-Type": "application/json" })
-      };
-      fetch(endpoint, config);
-      const cats = this.state.cats.filter(cat => cat.id !== catId);
-      this.setState({ cats });
-    } catch (e) {
-      console.log(e);
-    }
+    const endpoint = "http://localhost:8000/api/cat/" + catId;
+    const config = {
+      data: "",
+      headers: new Headers({ "Content-Type": "application/json" })
+    };
+    axios.delete(endpoint, config);
+    const cats = this.state.cats.filter(cat => cat.id !== catId);
+    this.setState({ cats });
   };
 
   render() {
